@@ -1,7 +1,7 @@
 import kotlin.math.floor
 
 fun day1() {
-    val inputs = readInputFile("inputs/day1.txt").toIntList()
+    val inputs = readInputFile(1).toIntList()
 
     val fuelForMassModules = inputs
         .map(::calculateFuel)

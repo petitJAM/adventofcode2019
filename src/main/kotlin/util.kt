@@ -11,7 +11,9 @@ inline class Input(private val inputStr: String) {
     }
 }
 
-fun readInputFile(fileName: String): Input {
+fun readInputFile(day: Int) = readInputFile("inputs/day$day.txt")
+
+private fun readInputFile(fileName: String): Input {
     val resourceFile = File(ClassLoader.getSystemResource(fileName).file)
     return Input(resourceFile.readText().trim())
 }
