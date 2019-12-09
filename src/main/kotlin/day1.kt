@@ -1,5 +1,31 @@
-fun day1() {
-    val input = readInputFile("inputs/day1.txt")
+import kotlin.math.floor
 
-    println(input)
+fun day1() {
+    val inputs = readInputFile("inputs/day1.txt").toIntList()
+
+    val fuelForMassModules = inputs
+        .map(::calculateFuel)
+        .sum()
+
+    println("Part 1: $fuelForMassModules")
+
+    val totalFuel = inputs
+        .map(::calculateFuel)
+        .map { fuelForMassModule ->
+            var fuelForFuel = calculateFuel(fuelForMassModule)
+            var sum = fuelForMassModule
+            while (fuelForFuel > 0) {
+                sum += fuelForFuel
+                fuelForFuel = calculateFuel(fuelForFuel)
+            }
+            sum
+        }
+        .sum()
+
+    println("Part 2: $totalFuel")
+}
+
+private fun calculateFuel(mass: Int): Int {
+    val fuel = floor(mass / 3f).toInt() - 2
+    return if (fuel < 0) 0 else fuel
 }
