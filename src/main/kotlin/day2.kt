@@ -1,7 +1,15 @@
 fun day2() {
     val input = readInputFile(2).inputStr.split(",").map(String::toInt)
 
-    val intcode = Intcode(input)
+    val modifiedInput = input.mapIndexed { index, i ->
+        when(index) {
+            1 -> 12
+            2 -> 2
+            else -> i
+        }
+    }
+
+    val intcode = Intcode(modifiedInput)
 
     intcode.execute()
 
@@ -47,6 +55,7 @@ class Intcode(codes: List<Int>) {
                     throw InvalidOpcodeException(opcode)
                 }
             }
+
             position += 4
         }
     }
