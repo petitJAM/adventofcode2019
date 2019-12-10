@@ -2,7 +2,7 @@ fun day2() {
     val input = readInputFile(2).inputStr.split(",").map(String::toInt)
 
     val modifiedInput = input.mapIndexed { index, i ->
-        when(index) {
+        when (index) {
             1 -> 12
             2 -> 2
             else -> i
@@ -16,6 +16,46 @@ fun day2() {
     val part1Answer = intcode.codes[0]
 
     println("Part 1: $part1Answer")
+
+    part2(input)
+}
+
+private fun part2(initialProgram: List<Int>) {
+
+    /*
+     * position1 = noun
+     * position2 = verb
+     *
+     * noun/verb -> [0, 99]
+     *
+     * what pair of inputs produces 19690720?
+     */
+
+    val target = 19690720
+
+    var answer: Int? = null
+
+    (0..99).forEach nounLoop@ { noun ->
+        (0..99).forEach { verb ->
+            val modifiedProgram = initialProgram.mapIndexed { index, i ->
+                when (index) {
+                    1 -> noun
+                    2 -> verb
+                    else -> i
+                }
+            }
+
+            val intcode = Intcode(modifiedProgram)
+            intcode.execute()
+            val result = intcode.codes[0]
+            if (result == target) {
+                answer = 100 * noun + verb
+                return@nounLoop
+            }
+        }
+    }
+
+    println("Part 2: $answer")
 }
 
 class Intcode(codes: List<Int>) {
