@@ -1,6 +1,6 @@
 import java.io.File
 
-inline class Input(private val inputStr: String) {
+inline class Input(val inputStr: String) {
 
     fun toList(): List<String> {
         return inputStr.split("\n")
